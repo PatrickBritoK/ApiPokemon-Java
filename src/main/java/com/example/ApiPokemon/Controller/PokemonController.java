@@ -1,18 +1,22 @@
 package com.example.ApiPokemon.Controller;
 
+import java.util.Arrays;
+
 public class PokemonController {
     private final int id;
     private final String nome;
     private final String tipo;
-    private final String habilidade;
+    private final String habilidades;
     private final String sexo;
+    private final String shiny;
 
-    public PokemonController(int id, String nome, String tipo, String habilidade, String sexo) {
+    public PokemonController(int id, String nome, String tipo, String[] habilidades, String sexo, String shiny) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;
-        this.habilidade = habilidade;
+        this.habilidades = Arrays.toString(habilidades);
         this.sexo = sexo;
+        this.shiny = shiny;
     }
 
     public int getId() {
@@ -27,7 +31,4 @@ public class PokemonController {
         return tipo;
     }
 
-    public String getHabilidade() {
-        return habilidade;
-    }
 }

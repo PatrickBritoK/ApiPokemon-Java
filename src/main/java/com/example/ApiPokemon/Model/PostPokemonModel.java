@@ -61,21 +61,22 @@ public class PostPokemonModel {
                 System.out.println("Nome inválido. Por favor, digite novamente.");
                 continue; // Volta para o início do loop
             }
+            System.out.println("nome: " + nome);
 
             System.out.println("Digite M=Macho/F=Femea/D=Desconhecido \n Se a resposta for em branco vai ser automaticamente dada como Desconhecido.");
             String sexo = scanner.nextLine();
-            if (sexo == "M") {
+            if (sexo.equals("M") || sexo.equals("m")) {
                 sexo = "Macho";
-            } else if (sexo == "F"){
+            } else if (sexo.equals("F") || sexo.equals("f")){
                 sexo = "Femea";
-            } else if (sexo == "D"){
+            } else if (sexo.equals("D") || sexo.equals("d")){
                 sexo = "Desconhecido";
             } else if (sexo.isEmpty()){
                 sexo = "Desconhecido";
             }
+            System.out.println("sexo: " + sexo);
 
-
-            String[] tipos = {"Normal", "Lutador", "Voador", "Venenoso", "Terra", "Pedra", "Inseto", "Fantasma", "Aço", "Fogo", "Água", "Planta", "Elétrico", "Psíquico", "Gelo", "Dragão", "Noturno", "Fada"};
+            String[] tipos = {"Normal", "Lutador", "Voador", "Venenoso", "Terra", "Pedra", "Inseto", "Fantasma", "Aço", "Fogo", "Água", "Planta", "Elétrico", "Psíquico", "Gelo", "Dragão", "Noturno", "Fada", "Desconhecido"};
 
             System.out.println("Escolha o tipo do Pokémon:");
             for (int i = 0; i < tipos.length; i++) {
@@ -93,13 +94,14 @@ public class PostPokemonModel {
             } else {
                 tipo = tipos[escolhaTipo - 1];
             }
-
+            System.out.println("tipo: " + tipo);
 
             System.out.println("Digite a habilidade do Pokémon:");
             String habilidade = scanner.nextLine();
             if (habilidade.isEmpty()) {
                 habilidade = "desconhecido";
             }
+            System.out.println("Habilidade: " + habilidade);
 
             // Cria um objeto Pokémon com as informações do usuário
             PokemonController pokemon = new PokemonController(id, nome, tipo, habilidade, sexo);

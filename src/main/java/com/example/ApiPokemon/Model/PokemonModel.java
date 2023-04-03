@@ -28,10 +28,5 @@ public class PokemonModel {
         System.out.println("Nome: " + name);
         System.out.println("Altura: 0," + height + " metros" );
         System.out.println("Peso: " + weight);
-
-
-
-
-
     }
 }

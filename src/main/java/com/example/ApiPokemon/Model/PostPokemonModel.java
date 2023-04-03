@@ -1,71 +1,100 @@
 package com.example.ApiPokemon.Model;
 
 import com.example.ApiPokemon.Controller.PokemonController;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+
 
 public class PostPokemonModel {
 
     public static void main(String[] args) {
         String nomeArquivo = "ListPokemon.json";
 
-        // Cria alguns objetos Post para armazenar no arquivo
-        PokemonController.Post post1 = new PokemonController.Post("1", "teste1", "grama", "teste3");
-        PokemonController.Post post2 = new PokemonController.Post("2", "teste2", "eletrico", "teste4");
+        List<PokemonController> pokemons = new ArrayList<>();
 
-        // Armazena os objetos no arquivo
-        List<PokemonController.Post> posts = new ArrayList<>();
-        posts.add(post1);
-        posts.add(post2);
+        Scanner scanner = new Scanner(System.in);
 
+        int lastId = 0;
+
+        // Lê os objetos do arquivo e determina o último ID salvo
         try {
-            FileWriter fileWriter = new FileWriter(nomeArquivo);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            Scanner fileScanner = new Scanner(new File(nomeArquivo));
+            StringBuilder sb = new StringBuilder();
 
-            for (PokemonController.Post post : posts) {
-                bufferedWriter.write(post.getId() + "\n");
-                bufferedWriter.write(post.getNome() + "\n");
-                bufferedWriter.write(post.getTipos() + "\n");
-                bufferedWriter.write(post.getHabilidades() + "\n");
-                bufferedWriter.write("\n");
+            while (fileScanner.hasNextLine()) {
+                sb.append(fileScanner.nextLine());
             }
 
-            bufferedWriter.close();
-            System.out.println("Arquivo gravado com sucesso.");
-        } catch (IOException ex) {
-            System.out.println("Erro ao gravar arquivo " + nomeArquivo + ": " + ex.getMessage());
-        }
+            fileScanner.close();
 
-        // Lê os objetos do arquivo
-        List<PokemonController.Post> postsLidos = new ArrayList<>();
+            // Converte o JSON de volta para uma lista de objetos Pokemon
+            // Converte o JSON de volta para uma lista de objetos Pokemon
+            Gson gsonLido = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            PokemonController[] pokemonsArray = gsonLido.fromJson(sb.toString(), PokemonController[].class);
+            pokemons = new ArrayList<>(Arrays.asList(pokemonsArray));
 
-        try {
-            FileReader fileReader = new FileReader(nomeArquivo);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String linha;
-            while ((linha = bufferedReader.readLine()) != null) {
-                String id = linha;
-                String nome = bufferedReader.readLine();
-                String tipos = bufferedReader.readLine();
-                String habilidades = bufferedReader.readLine();
-                bufferedReader.readLine(); // lê a linha vazia que separa os objetos
-
-                PokemonController.Post post = new PokemonController.Post(id, nome, tipos, habilidades);
-                postsLidos.add(post);
+            // Determina o último ID salvo no arquivo
+            if (!pokemons.isEmpty()) {
+                lastId = pokemons.get(pokemons.size() - 1).getId();
             }
 
-            bufferedReader.close();
             System.out.println("Arquivo lido com sucesso.");
         } catch (IOException ex) {
             System.out.println("Erro ao ler arquivo " + nomeArquivo + ": " + ex.getMessage());
         }
 
-        // Imprime os objetos lidos do arquivo
-        for (PokemonController.Post post : postsLidos) {
-            System.out.println(post.toString());
+        int id = lastId + 1;
+
+        while (true) {
+            System.out.println("Digite o nome do Pokémon:");
+            String nome = scanner.nextLine();
+
+            System.out.println("Digite o tipo do Pokémon:");
+            String tipo = scanner.nextLine();
+
+            System.out.println("Digite a habilidade do Pokémon:");
+            String habilidade = scanner.nextLine();
+
+            // Cria um objeto Pokémon com as informações do usuário
+            PokemonController pokemon = new PokemonController(id, nome, tipo, habilidade);
+
+            id++;
+            pokemons.add(pokemon);
+
+
+            System.out.println("Deseja adicionar mais um Pokémon? (s/n)");
+            String resposta = scanner.nextLine();
+
+            if (resposta.equals("n")) {
+                break;
+            }
+        }
+        scanner.close();
+
+        // Cria um objeto Gson para serializar a lista de Pokémon em formato JSON
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(pokemons);
+
+        try {
+            FileWriter fileWriter = new FileWriter(nomeArquivo);
+            fileWriter.write(json);
+            fileWriter.close();
+            System.out.println("Arquivo gravado com sucesso.");
+        } catch (IOException ex) {
+            System.out.println("Erro ao gravar arquivo " + nomeArquivo + ": " + ex.getMessage());
+        }
+        for (PokemonController pokemon : pokemons) {
+            System.out.println(pokemon.toString());
         }
     }
 }

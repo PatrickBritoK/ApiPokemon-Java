@@ -1,60 +1,48 @@
 package com.example.ApiPokemon.Controller;
 
 public class PokemonController {
-    public static class Post {
-        private int id;
-        private String nome;
-        private String tipos;
-        private String habilidades;
+    private int id;
+    private String nome;
+    private String tipo;
+    private String habilidade;
 
-        public Post(String id, String nome, String tipos, String habilidades) {
-            this.id = Integer.parseInt(id);
-            this.nome = nome;
-            this.tipos = tipos;
-            this.habilidades = habilidades;
-        }
+    public PokemonController(int id, String nome, String tipo, String habilidade) {
+        this.id = id;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.habilidade = habilidade;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public String getNome() {
+        return nome;
+    }
 
-        public String getNome() {
-            return nome;
-        }
+    public String getTipo() {
+        return tipo;
+    }
 
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
+    public String getHabilidade() {
+        return habilidade;
+    }
 
-        public String getTipos() {
-            return tipos;
-        }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        public void setTipos(String tipos) {
-            this.tipos = tipos;
-        }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-        public String getHabilidades() {
-            return habilidades;
-        }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-        public void setHabilidades(String habilidades) {
-            this.habilidades = habilidades;
-        }
-
-        @Override
-        public String toString() {
-            return "Post{" +
-                    "id ='" + id + '\'' +
-                    ", nome ='" + nome + '\'' +
-                    ", tipos ='" + tipos + '\'' +
-                    ", habilidades ='" + habilidades + '\'' +
-                    '}';
-        }
-
+    public void setHabilidade(String habilidade) {
+        this.habilidade = habilidade;
     }
 }
+

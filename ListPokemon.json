@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "nome": "pikachu",
+    "tipo": "eletrico",
+    "habilidade": "teste"
+  },
+  {
+    "id": 2,
+    "nome": "Teste",
+    "tipo": "Água",
+    "habilidade": "teste",
+    "sexo": "M"
+  }
+]

@@ -1,16 +1,18 @@
 package com.example.ApiPokemon.Controller;
 
 public class PokemonController {
-    private int id;
-    private String nome;
-    private String tipo;
-    private String habilidade;
+    private final int id;
+    private final String nome;
+    private final String tipo;
+    private final String habilidade;
+    private final String sexo;
 
-    public PokemonController(int id, String nome, String tipo, String habilidade) {
+    public PokemonController(int id, String nome, String tipo, String habilidade, String sexo) {
         this.id = id;
         this.nome = nome;
         this.tipo = tipo;
         this.habilidade = habilidade;
+        this.sexo = sexo;
     }
 
     public int getId() {
@@ -28,21 +30,4 @@ public class PokemonController {
     public String getHabilidade() {
         return habilidade;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public void setHabilidade(String habilidade) {
-        this.habilidade = habilidade;
-    }
 }
-

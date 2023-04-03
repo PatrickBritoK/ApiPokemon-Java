@@ -36,7 +36,6 @@ public class PostPokemonModel {
             fileScanner.close();
 
             // Converte o JSON de volta para uma lista de objetos Pokemon
-            // Converte o JSON de volta para uma lista de objetos Pokemon
             Gson gsonLido = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -58,15 +57,52 @@ public class PostPokemonModel {
         while (true) {
             System.out.println("Digite o nome do Pokémon:");
             String nome = scanner.nextLine();
+            if (nome == null || nome.trim().isEmpty()) {
+                System.out.println("Nome inválido. Por favor, digite novamente.");
+                continue; // Volta para o início do loop
+            }
 
-            System.out.println("Digite o tipo do Pokémon:");
-            String tipo = scanner.nextLine();
+            System.out.println("Digite M=Macho/F=Femea/D=Desconhecido \n Se a resposta for em branco vai ser automaticamente dada como Desconhecido.");
+            String sexo = scanner.nextLine();
+            if (sexo == "M") {
+                sexo = "Macho";
+            } else if (sexo == "F"){
+                sexo = "Femea";
+            } else if (sexo == "D"){
+                sexo = "Desconhecido";
+            } else if (sexo.isEmpty()){
+                sexo = "Desconhecido";
+            }
+
+
+            String[] tipos = {"Normal", "Lutador", "Voador", "Venenoso", "Terra", "Pedra", "Inseto", "Fantasma", "Aço", "Fogo", "Água", "Planta", "Elétrico", "Psíquico", "Gelo", "Dragão", "Noturno", "Fada"};
+
+            System.out.println("Escolha o tipo do Pokémon:");
+            for (int i = 0; i < tipos.length; i++) {
+                System.out.println((i+1) + ". " + tipos[i]);
+            }
+
+            int escolhaTipo = scanner.nextInt();
+            scanner.nextLine();
+
+            String tipo;
+
+            if (escolhaTipo < 1 || escolhaTipo > tipos.length) {
+                System.out.println("Escolha inválida.");
+                tipo = "desconhecido";
+            } else {
+                tipo = tipos[escolhaTipo - 1];
+            }
+
 
             System.out.println("Digite a habilidade do Pokémon:");
             String habilidade = scanner.nextLine();
+            if (habilidade.isEmpty()) {
+                habilidade = "desconhecido";
+            }
 
             // Cria um objeto Pokémon com as informações do usuário
-            PokemonController pokemon = new PokemonController(id, nome, tipo, habilidade);
+            PokemonController pokemon = new PokemonController(id, nome, tipo, habilidade, sexo);
 
             id++;
             pokemons.add(pokemon);
@@ -89,12 +125,12 @@ public class PostPokemonModel {
             FileWriter fileWriter = new FileWriter(nomeArquivo);
             fileWriter.write(json);
             fileWriter.close();
-            System.out.println("Arquivo gravado com sucesso.");
+            System.out.println("Pokemon registrado com sucesso.");
         } catch (IOException ex) {
             System.out.println("Erro ao gravar arquivo " + nomeArquivo + ": " + ex.getMessage());
         }
-        for (PokemonController pokemon : pokemons) {
-            System.out.println(pokemon.toString());
-        }
+        //for (PokemonController pokemon : pokemons) {
+          //  System.out.println(pokemon.toString());
+        //}
     }
 }
